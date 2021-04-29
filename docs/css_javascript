@@ -1,0 +1,21 @@
+Lavoriamo con Laravel Mix
+questo non fa altro che compilare e minificare i file javascript e css.
+come procedere:
+ - npm install
+
+ - npm run dev
+
+npm run-dev prenderà in consegna il file webpack.mix.js e compilerà i file dichiarati all'interno e li sposterà su public
+
+ - npm run watch
+
+con npm run watch questo rimmarrà in guardia per ogni cambiamento effettuato nei css e javascript
+
+IMPORTANTE!!!
+Quindi dopo aver lanciato npm run dev le modifiche andranno fatte nei file della cartella "resources" NO IN PUBLIC,
+e con il comando npm run watch il sistema ricompilerà volta volta i file sul public
+
+ // Run all Mix tasks and minify output...
+ npm run prod
+
+(DA APPROFONDIRE)

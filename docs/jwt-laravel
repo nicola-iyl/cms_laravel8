@@ -1,0 +1,29 @@
+JWT Authentication Tutorial
+
+1- installo il jwt-auth:
+    composer require tymon/jwt-auth
+2- in config/app.php aggiungo:
+    'providers' => [
+        ....
+        ....
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+    ],
+    'aliases' => [
+        ....
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        ....
+    ],
+
+3- lancio il comando per generare  config/jwt.php ( lo copia dalla cartella vendor tymon )
+    php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+4- genero la chiave segreta che così troveremo nel .env JWT_SECRET
+    php artisan jwt:secret
+
+5- aggiungo al file config/auth
+    'api' => [
+                'driver' => 'jwt',
+                'provider' => 'users_cms',
+                'hash' => false,
+            ],

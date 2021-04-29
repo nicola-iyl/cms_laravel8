@@ -1,0 +1,12 @@
+Per avere suggerimenti laravel anche nelle viste:
+naturalmente ci vuole il plugin di phpstorm già installato, poi per i SINGOLI PROGETTI
+con composer installare:
+    composer require barryvdh/laravel-ide-helper
+poi nel file config/app.php aggiungere ai Providers:
+    'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class',
+
+dopo di che lanciare i seguenti comandi:
+    php artisan ide-helper:generate
+    php artisan ide-helper:meta
+
+FATTO

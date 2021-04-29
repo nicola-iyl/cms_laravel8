@@ -1,0 +1,43 @@
+Creare sistema autenticazione senza StarterKit:
+
+- creo route Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
+- creo LoginController con il metodo showLoginForm
+
+- creo la vista con il form Login
+
+- implemento nel LoginController l'Auth Facade: use Illuminate\Support\Facades\Auth;
+
+- creo il metodo login in LoginController che si occuperà di verificare le credenziali chiamato dal form di login
+
+- il metodo che si occupa di verificare le credenziali nel db è "attempt" dell'Auth Facade
+
+- se si chiama semplicemente con Auth::attempt($credentials) oppure Auth:attempt('email' => $email, 'password'=> $password ) si baserà sulla "guard" di default settatata nell'config/auth.php
+altrimenti se si vuole utilizzare una "guard" specifica si utilizzarà il methodo Auth->guard('admin')->attempt($credentials))
+
+- per passare più argomenti all'autenticazione es. Auth::attempt(['email' => $email, 'password' => $password, 'active' => 1]) in questo caso verifica anche che l'utente sia attivo.
+
+- Quindi nel caso abbiamo più login all'interno del progetto utilizzeremo guard diverse che sono configurate nel file config/auth.php,
+    la guard è formata da:
+    * un driver che per il sito web sarà la "session" mentre per le api dove non c'è il browser sarà per es. "token",
+    * un provider che specifica il Model a cui si appoggia
+
+- Con il campo remember_token nella tabella users dell'autenticazione Laravel terrà l'utente autenticato all'infinito fino a che non effettuerà il logut, per fare questo chiamiamo il metodo:
+    Auth::attempt(['email' => $email, 'password' => $password], $remember)
+
+- metodo Auth:login($user), in questo caso viene passato un oggetto user al login per effettuare il login dopo per esempio aver fatto la registrazione
+    anche così Auth::guard('admin')->login($user, $remember);
+
+- per proteggere route da autenticazione usiamo i MIDDLEWARE, questi devono essere configurati nel Kernel.php, io ho fatto un mio middleware invece di usare quello standard di laravel,
+    così da specificare la guard dell'autenticazione, anche se si può fare con l'altro ma si deve passare il parametro nella rotta es.Route::middleware('cms.isauth:cms')->group
+    dove :cms è la guard
+
+// Retrieve the currently authenticated user...
+$user = Auth::user();
+
+// Retrieve the currently authenticated user's ID...
+$id = Auth::id();
+
+if (Auth::check()) {
+    // The user is logged in...
+}

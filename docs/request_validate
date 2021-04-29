@@ -1,0 +1,10 @@
+$request->validate(['email' => 'required|string','password' => 'required|string|max:5']);
+
+Metodo per validare i parametri che arrivano dalla request,
+nel caso non rispettino le regole inserite l'applicazione tornerà indietro alla vecchia url con gli errori nella sessione che potranno essere
+visualizzati tramite la variablie $errors:
+es. @if ($errors->has('email'))<span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>@endif
+
+i messaggi di errore si trovano in resources/lang/it/validation
+
+se è una chiamata AJAX verrà restituita una risposta json con i messagi di errore
